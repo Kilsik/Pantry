@@ -45,7 +45,7 @@ def orderbox(update, _):
     return CHOICE1
     
 
-def delivery_from_method(update, _):
+def delivery_from_method(update, context):
     query = update.callback_query
     variant = query.data
     query.answer()
@@ -54,8 +54,9 @@ def delivery_from_method(update, _):
         InlineKeyboardButton('Вы вывезите вещи', callback_data='you'),
     ]
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=2))
-    query.edit_message_text(text=f"Вы выбрали адрес хранения: {variant} \
-        \nМы предлагаем бесплатную доставку Ваших вещей из дома на хранение. \
+    query.edit_message_text(text=f"Вы выбрали адрес хранения: {variant}")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Мы \
+        предлагаем бесплатную доставку Ваших вещей из дома на хранение. \
         Хотите воспользоваться?", reply_markup=reply_markup)
     return CHOICE2
 
